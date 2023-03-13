@@ -1,5 +1,9 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CustomConfigService } from 'common/config/custom-config.service';
 import { lastValueFrom, map } from 'rxjs';
 
@@ -21,7 +25,11 @@ export class UserAuthService {
 
       return data;
     } catch (error) {
-      throw new InternalServerErrorException(error);
+      if (error?.response?.status) {
+        throw new HttpException(error?.response?.data, error.response.status);
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 }

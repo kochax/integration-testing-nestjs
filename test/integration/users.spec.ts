@@ -90,14 +90,6 @@ describe('UsersController (integration)', () => {
         });
     });
 
-    it('should return 404 error when user is not found', async () => {
-      const userId = 'b618445a-0089-43d5-b9ca-e6f2fc29a11d';
-
-      return request(app.getHttpServer())
-        .get(`/users/${userId}`)
-        .expect(HttpStatus.NOT_FOUND);
-    });
-
     it('should return user roles from user auth service', async () => {
       const userId = 'b618445a-0089-43d5-b9ca-e6f2fc29a11d';
 
@@ -107,6 +99,14 @@ describe('UsersController (integration)', () => {
         .then((response) => {
           expect(response.body).toEqual(userRolesResponse);
         });
+    });
+
+    it('should return 404 error when user roles were not found', async () => {
+      const userId = 'b618445a-0089-43d5-b9ca-e6f2fc29a11c'; // wrong user id
+
+      return request(app.getHttpServer())
+        .get(`/users/${userId}/roles`)
+        .expect(HttpStatus.NOT_FOUND);
     });
   });
 });

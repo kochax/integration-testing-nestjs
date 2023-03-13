@@ -1,6 +1,6 @@
 # integration-testing-nestjs
 
-> This project is created with template
+> This project is created with the [template](https://github.com/zsevic/nestjs-starter) 
 
 > Minimal NestJS REST API service
 
